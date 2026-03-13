@@ -45,13 +45,15 @@ const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
 const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; setEvents: (e: GenlayerEvent[]) => void; onClose: () => void }) => {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+  const [link, setLink] = useState("");
   const [status, setStatus] = useState<GenlayerEvent["status"]>("upcoming");
 
   const addEvent = () => {
     if (!title || !date) return;
-    setEvents([...events, { id: Date.now().toString(), title, date, status }]);
+    setEvents([...events, { id: Date.now().toString(), title, date, status, link: link || undefined }]);
     setTitle("");
     setDate("");
+    setLink("");
   };
 
   const deleteEvent = (id: string) => setEvents(events.filter((e) => e.id !== id));
