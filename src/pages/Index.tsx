@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Lock } from "lucide-react";
 import Header from "@/components/Header";
+import TerminalHero from "@/components/TerminalHero";
 import ELI5Section from "@/components/ELI5Section";
 import EventsSidebar from "@/components/EventsSidebar";
 import { AdminLogin, AdminPanel } from "@/components/AdminDashboard";
+import { Separator } from "@/components/ui/separator";
 import { GenlayerEvent, mockEvents } from "@/data/events";
 
 const Index = () => {
@@ -16,9 +18,14 @@ const Index = () => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {view === "public" && (
-          <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-8 animate-fade-in">
-            <ELI5Section />
+          <div className="animate-fade-in">
+            <TerminalHero />
             <EventsSidebar events={events} />
+
+            <div className="mt-16 md:mt-24">
+              <Separator className="mb-12 bg-border/50" />
+              <ELI5Section />
+            </div>
           </div>
         )}
 

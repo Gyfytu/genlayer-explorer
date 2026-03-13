@@ -39,7 +39,7 @@ const EventsSidebar = ({ events = mockEvents }: EventsSidebarProps) => {
         <Radio className="w-5 h-5 text-neon-purple" />
         <h2 className="text-lg font-semibold text-foreground">Special Events</h2>
       </div>
-      <div className="space-y-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {events.map((event) => (
           <div key={event.id} className="glass-card-hover p-4 space-y-2">
             <div className="flex items-start justify-between gap-2">
