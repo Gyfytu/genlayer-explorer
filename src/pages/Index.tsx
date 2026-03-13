@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import TerminalHero from "@/components/TerminalHero";
 import ELI5Section from "@/components/ELI5Section";
 import EventsSidebar from "@/components/EventsSidebar";
+import NetworkPulse from "@/components/NetworkPulse";
 import { AdminLogin, AdminPanel } from "@/components/AdminDashboard";
 import { Separator } from "@/components/ui/separator";
 import { GenlayerEvent, mockEvents } from "@/data/events";
@@ -37,7 +38,7 @@ const Index = () => {
         )}
       </main>
 
-      <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground flex items-center justify-center gap-4">
+      <footer className="border-t border-border py-6 pb-12 text-center text-xs text-muted-foreground flex items-center justify-center gap-4">
         <span>© 2026 Genlayer Hub</span>
         <button
           onClick={() => setView(view === "public" ? "login" : "public")}
@@ -46,6 +47,8 @@ const Index = () => {
           Admin Access
         </button>
       </footer>
+
+      <NetworkPulse />
     </div>
   );
 };
