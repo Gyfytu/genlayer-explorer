@@ -15,7 +15,11 @@ const ELI5Section = () => {
 
   return (
     <div className="space-y-6">
-      <TerminalHero />
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+        <span className="bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent">
+          Explain Genlayer like I'm 5
+        </span>
+      </h1>
       <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
         Our Intelligent Contract will evaluate your explanation based on accuracy and simplicity.
       </p>
