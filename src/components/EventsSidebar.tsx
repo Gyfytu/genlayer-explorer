@@ -98,6 +98,17 @@ const EventsSidebar = ({ events = mockEvents }: EventsSidebarProps) => {
                 <Calendar className="w-3 h-3" />
                 {event.date}
               </div>
+              {event.link && (
+                <a
+                  href={event.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs text-neon-blue hover:underline transition-colors"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  View Event
+                </a>
+              )}
             </div>
           ))
         ) : (

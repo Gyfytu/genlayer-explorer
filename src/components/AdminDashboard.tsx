@@ -93,9 +93,10 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
       <div className="glass-card overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border text-muted-foreground">
+             <tr className="border-b border-border text-muted-foreground">
               <th className="text-left p-4 font-medium">Title</th>
               <th className="text-left p-4 font-medium hidden sm:table-cell">Date</th>
+              <th className="text-left p-4 font-medium hidden sm:table-cell">Link</th>
               <th className="text-left p-4 font-medium">Status</th>
               <th className="text-right p-4 font-medium">Actions</th>
             </tr>
