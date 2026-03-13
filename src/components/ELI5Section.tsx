@@ -1,6 +1,47 @@
 import { useState } from "react";
 import { Loader2, RefreshCw } from "lucide-react";
 
+const ELI5Section = () => {
+  const [state, setState] = useState<"idle" | "loading" | "done">("idle");
+
+  const handleClick = () => {
+    setState("loading");
+    setTimeout(() => setState("done"), 2000);
+  };
+
+  const handleReset = () => setState("idle");
+
+  return (
+    <div className="space-y-6">
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+        <span className="bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent">
+          Explain Genlayer like I'm 5
+        </span>
+      </h1>
+      <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
+        Click the button below to have our Genlayer Intelligent Contract break down how it works in simple terms.
+      </p>
+
+      {state === "idle" && (
+        <div className="flex justify-center pt-4 animate-fade-in">
+          <button
+            onClick={handleClick}
+            className="px-10 py-5 text-xl md:text-2xl font-bold rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-[0_0_30px_hsl(260_80%_60%/0.4),0_0_60px_hsl(230_80%_60%/0.2)] hover:shadow-[0_0_40px_hsl(260_80%_60%/0.6),0_0_80px_hsl(230_80%_60%/0.3)] hover:scale-105 transition-all duration-300 cursor-pointer"
+          >
+            🤖 Explain it to me!
+          </button>
+        </div>
+      )}
+
+      {state === "loading" && (
+        <div className="flex flex-col items-center gap-3 py-12 animate-fade-in">
+          <Loader2 className="w-10 h-10 text-neon-purple animate-spin" />
+          <p className="text-muted-foreground font-mono text-sm">
+            Connecting to Genlayer AI consensus...
+          </p>
+        </div>
+      )}
+
       {state === "done" && (
         <div className="space-y-6 animate-fade-in">
           <div className="glass-card p-6 md:p-8 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_hsl(260_80%_60%/0.15)]">
