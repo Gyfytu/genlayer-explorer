@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Lock, LogIn, Plus, Pencil, Trash2, X } from "lucide-react";
+import { Lock, LogIn, Plus, Pencil, Trash2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GenlayerEvent, mockEvents } from "@/data/events";
