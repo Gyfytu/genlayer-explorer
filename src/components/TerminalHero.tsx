@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const fullText = "Welcome to Genlayer special events hub";
+const fullText = "WELCOME TO GENLAYER SPECIAL EVENTS HUB";
 
 const TerminalHero = () => {
   const [displayed, setDisplayed] = useState("");
@@ -22,9 +22,9 @@ const TerminalHero = () => {
 
   return (
     <div className="mb-8">
-      <p className="font-mono text-sm md:text-base text-neon-green tracking-wide">
+      <p className="font-mono text-3xl md:text-5xl text-neon-green tracking-wide uppercase font-bold">
         {displayed}
-        <span className="inline-block w-2 h-5 ml-0.5 bg-neon-green align-middle animate-pulse" />
+        <span className="inline-block w-3 h-8 md:h-12 ml-1 bg-neon-green align-middle animate-pulse" />
       </p>
     </div>
   );
