@@ -38,14 +38,24 @@ const Index = () => {
         )}
       </main>
 
-      <footer className="border-t border-border py-6 pb-12 text-center text-xs text-muted-foreground flex items-center justify-center gap-4">
-        <span>© 2026 Genlayer Hub</span>
-        <button
-          onClick={() => setView(view === "public" ? "login" : "public")}
-          className="text-muted-foreground/50 hover:text-foreground transition-colors duration-200"
+      <footer className="border-t border-border py-6 pb-12 text-center text-xs text-muted-foreground flex flex-col items-center gap-3">
+        <div className="flex items-center gap-4">
+          <span>© 2026 Genlayer Hub</span>
+          <button
+            onClick={() => setView(view === "public" ? "login" : "public")}
+            className="text-muted-foreground/50 hover:text-foreground transition-colors duration-200"
+          >
+            Admin Access
+          </button>
+        </div>
+        <a
+          href="https://x.com/marisdigitals11"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-muted-foreground/60 hover:text-foreground transition-colors duration-200"
         >
-          Admin Access
-        </button>
+          Made with ❤️ by marisdigitals11
+        </a>
       </footer>
 
       <NetworkPulse />
