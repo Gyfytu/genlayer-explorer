@@ -1,18 +1,22 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
 const fullText = "WELCOME TO GENLAYER SPECIAL EVENT HUB";
 
 const TerminalHero = () => {
   const [displayed, setDisplayed] = useState("");
   const [typingDone, setTypingDone] = useState(false);
+  const indexRef = useRef(0);
 
   useEffect(() => {
-    let i = 0;
+    indexRef.current = 0;
+    setDisplayed("");
+    setTypingDone(false);
+
     const interval = setInterval(() => {
-      i++;
-      setDisplayed(fullText.slice(0, i));
-      if (i >= fullText.length) {
+      indexRef.current += 1;
+      const next = fullText.slice(0, indexRef.current);
+      setDisplayed(next);
+      if (indexRef.current >= fullText.length) {
         clearInterval(interval);
         setTimeout(() => setTypingDone(true), 300);
       }
