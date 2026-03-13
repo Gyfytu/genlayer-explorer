@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import TerminalHero from "@/components/TerminalHero";
 import ELI5Section from "@/components/ELI5Section";
 import EventsSidebar from "@/components/EventsSidebar";
+import NetworkPulse from "@/components/NetworkPulse";
 import { AdminLogin, AdminPanel } from "@/components/AdminDashboard";
 import { Separator } from "@/components/ui/separator";
 import { GenlayerEvent, mockEvents } from "@/data/events";
