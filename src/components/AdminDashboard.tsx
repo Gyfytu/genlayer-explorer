@@ -45,13 +45,15 @@ const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
 const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; setEvents: (e: GenlayerEvent[]) => void; onClose: () => void }) => {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+  const [link, setLink] = useState("");
   const [status, setStatus] = useState<GenlayerEvent["status"]>("upcoming");
 
   const addEvent = () => {
     if (!title || !date) return;
-    setEvents([...events, { id: Date.now().toString(), title, date, status }]);
+    setEvents([...events, { id: Date.now().toString(), title, date, status, link: link || undefined }]);
     setTitle("");
     setDate("");
+    setLink("");
   };
 
   const deleteEvent = (id: string) => setEvents(events.filter((e) => e.id !== id));
@@ -68,9 +70,10 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
       {/* Add Event Form */}
       <div className="glass-card p-6 space-y-4">
         <h3 className="font-semibold text-foreground">Add New Event</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Input placeholder="Event title" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted border-border text-foreground" />
           <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="bg-muted border-border text-foreground" />
+          <Input placeholder="Event link (optional)" value={link} onChange={(e) => setLink(e.target.value)} className="bg-muted border-border text-foreground" />
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as GenlayerEvent["status"])}
@@ -90,9 +93,10 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
       <div className="glass-card overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border text-muted-foreground">
+             <tr className="border-b border-border text-muted-foreground">
               <th className="text-left p-4 font-medium">Title</th>
               <th className="text-left p-4 font-medium hidden sm:table-cell">Date</th>
+              <th className="text-left p-4 font-medium hidden sm:table-cell">Link</th>
               <th className="text-left p-4 font-medium">Status</th>
               <th className="text-right p-4 font-medium">Actions</th>
             </tr>
@@ -102,6 +106,15 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
               <tr key={event.id} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
                 <td className="p-4 text-foreground">{event.title}</td>
                 <td className="p-4 text-muted-foreground hidden sm:table-cell">{event.date}</td>
+                <td className="p-4 hidden sm:table-cell">
+                  {event.link ? (
+                    <a href={event.link} target="_blank" rel="noopener noreferrer" className="text-xs text-neon-blue hover:underline truncate max-w-[150px] inline-block">
+                      {event.link}
+                    </a>
+                  ) : (
+                    <span className="text-xs text-muted-foreground">—</span>
+                  )}
+                </td>
                 <td className="p-4">
                   <span className={`font-mono text-xs px-2 py-1 rounded ${
                     event.status === "live" ? "bg-neon-green/10 text-neon-green" :
