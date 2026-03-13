@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Header from "@/components/Header";
-import Header from "@/components/Header";
 import TerminalHero from "@/components/TerminalHero";
 import ELI5Section from "@/components/ELI5Section";
 import EventsSidebar from "@/components/EventsSidebar";
