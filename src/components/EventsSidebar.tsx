@@ -44,6 +44,12 @@ const EventsSidebar = ({ events = mockEvents }: EventsSidebarProps) => {
     return event.status === "completed";
   });
 
+  const counts = {
+    all: events.length,
+    upcoming: events.filter((e) => e.status === "upcoming" || e.status === "live").length,
+    past: events.filter((e) => e.status === "completed").length,
+  };
+
   const tabs: { key: FilterTab; label: string }[] = [
     { key: "all", label: "All" },
     { key: "upcoming", label: "Upcoming" },
@@ -69,6 +75,13 @@ const EventsSidebar = ({ events = mockEvents }: EventsSidebarProps) => {
               }`}
             >
               {tab.label}
+              <span className={`ml-1.5 inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1 rounded-full text-[10px] font-mono ${
+                filter === tab.key
+                  ? "bg-primary/15 text-primary"
+                  : "bg-muted text-muted-foreground"
+              }`}>
+                {counts[tab.key]}
+              </span>
             </button>
           ))}
         </div>
