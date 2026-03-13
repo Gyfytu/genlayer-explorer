@@ -38,14 +38,13 @@ const Index = () => {
         )}
       </main>
 
-      <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
+      <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground flex items-center justify-center gap-4">
         <span>© 2026 Genlayer Hub</span>
         <button
           onClick={() => setView(view === "public" ? "login" : "public")}
-          className="ml-3 text-muted-foreground/40 hover:text-muted-foreground transition-colors"
-          title="Admin"
+          className="text-muted-foreground/50 hover:text-foreground transition-colors duration-200"
         >
-          <Lock className="w-3 h-3 inline" />
+          Admin Access
         </button>
       </footer>
     </div>

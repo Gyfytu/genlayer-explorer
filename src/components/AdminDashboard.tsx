@@ -60,8 +60,8 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
     <div className="space-y-8 animate-fade-in">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold gradient-text">Admin Dashboard</h2>
-        <Button variant="ghost" size="icon" onClick={onClose} className="text-muted-foreground hover:text-foreground">
-          <X className="w-5 h-5" />
+        <Button variant="outline" onClick={onClose} className="gap-2 text-muted-foreground hover:text-foreground border-border">
+          <ArrowLeft className="w-4 h-4" /> Back to Main Hub
         </Button>
       </div>
 
