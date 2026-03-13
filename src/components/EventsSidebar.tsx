@@ -75,6 +75,13 @@ const EventsSidebar = ({ events = mockEvents }: EventsSidebarProps) => {
               }`}
             >
               {tab.label}
+              <span className={`ml-1.5 inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1 rounded-full text-[10px] font-mono ${
+                filter === tab.key
+                  ? "bg-primary/15 text-primary"
+                  : "bg-muted text-muted-foreground"
+              }`}>
+                {counts[tab.key]}
+              </span>
             </button>
           ))}
         </div>
