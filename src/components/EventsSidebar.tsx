@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calendar, Radio } from "lucide-react";
+import { Calendar, Radio, ExternalLink } from "lucide-react";
 import { GenlayerEvent, mockEvents } from "@/data/events";
 import { Badge } from "@/components/ui/badge";
 
