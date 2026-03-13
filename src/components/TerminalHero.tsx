@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const fullText = "WELCOME TO GENLAYER SPECIAL EVENTS HUB";
+const fullText = "WELCOME TO GENLAYER";
 
 const TerminalHero = () => {
   const [displayed, setDisplayed] = useState("");
