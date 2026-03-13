@@ -44,6 +44,12 @@ const EventsSidebar = ({ events = mockEvents }: EventsSidebarProps) => {
     return event.status === "completed";
   });
 
+  const counts = {
+    all: events.length,
+    upcoming: events.filter((e) => e.status === "upcoming" || e.status === "live").length,
+    past: events.filter((e) => e.status === "completed").length,
+  };
+
   const tabs: { key: FilterTab; label: string }[] = [
     { key: "all", label: "All" },
     { key: "upcoming", label: "Upcoming" },
