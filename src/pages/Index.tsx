@@ -38,7 +38,7 @@ const Index = () => {
         )}
       </main>
 
-      <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground flex items-center justify-center gap-4">
+      <footer className="border-t border-border py-6 pb-12 text-center text-xs text-muted-foreground flex items-center justify-center gap-4">
         <span>© 2026 Genlayer Hub</span>
         <button
           onClick={() => setView(view === "public" ? "login" : "public")}
@@ -47,6 +47,8 @@ const Index = () => {
           Admin Access
         </button>
       </footer>
+
+      <NetworkPulse />
     </div>
   );
 };
