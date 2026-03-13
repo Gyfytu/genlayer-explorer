@@ -86,7 +86,7 @@ const EventsSidebar = ({ events = mockEvents }: EventsSidebarProps) => {
           ))}
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div key={filter} className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in">
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event) => (
             <div key={event.id} className="glass-card-hover p-4 space-y-2">
