@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Send, Loader2, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import TerminalHero from "@/components/TerminalHero";
 
 const ELI5Section = () => {
   const [text, setText] = useState("");
@@ -14,14 +15,10 @@ const ELI5Section = () => {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl md:text-4xl font-bold gradient-text leading-tight">
-          Explain Genlayer Like I'm 5
-        </h1>
-        <p className="mt-3 text-muted-foreground text-sm md:text-base leading-relaxed">
-          Our Intelligent Contract will evaluate your explanation based on accuracy and simplicity.
-        </p>
-      </div>
+      <TerminalHero />
+      <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
+        Our Intelligent Contract will evaluate your explanation based on accuracy and simplicity.
+      </p>
 
       <textarea
         value={text}
