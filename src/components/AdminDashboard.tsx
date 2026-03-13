@@ -105,6 +105,15 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
               <tr key={event.id} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
                 <td className="p-4 text-foreground">{event.title}</td>
                 <td className="p-4 text-muted-foreground hidden sm:table-cell">{event.date}</td>
+                <td className="p-4 hidden sm:table-cell">
+                  {event.link ? (
+                    <a href={event.link} target="_blank" rel="noopener noreferrer" className="text-xs text-neon-blue hover:underline truncate max-w-[150px] inline-block">
+                      {event.link}
+                    </a>
+                  ) : (
+                    <span className="text-xs text-muted-foreground">—</span>
+                  )}
+                </td>
                 <td className="p-4">
                   <span className={`font-mono text-xs px-2 py-1 rounded ${
                     event.status === "live" ? "bg-neon-green/10 text-neon-green" :
