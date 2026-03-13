@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { Send, Loader2, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import TerminalHero from "@/components/TerminalHero";
+import { Loader2, RefreshCw } from "lucide-react";
+
+const EXPLANATION =
+  "Imagine you and your friends share a magic notebook to keep track of things. Normally, a magic notebook can only do simple math. But Genlayer's notebook has a super-smart robot brain built into it! It can read the internet, understand normal words, and make smart decisions with your friends. It's a blockchain that can actually think!";
 
 const ELI5Section = () => {
-  const [text, setText] = useState("");
   const [state, setState] = useState<"idle" | "loading" | "done">("idle");
 
-  const handleSubmit = () => {
-    if (!text.trim()) return;
+  const handleClick = () => {
     setState("loading");
-    setTimeout(() => setState("done"), 3000);
+    setTimeout(() => setState("done"), 2000);
   };
+
+  const handleReset = () => setState("idle");
 
   return (
     <div className="space-y-6">
@@ -21,48 +22,45 @@ const ELI5Section = () => {
         </span>
       </h1>
       <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-        Our Intelligent Contract will evaluate your explanation based on accuracy and simplicity.
+        Click the button below to have our Genlayer Intelligent Contract break down how it works in simple terms.
       </p>
 
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Genlayer is like a group of really smart robots that all work together to make sure everyone agrees on the same answer..."
-        className="w-full h-40 glass-card p-4 text-sm text-foreground placeholder:text-muted-foreground resize-none focus:outline-none focus:border-neon-blue/50 focus:shadow-neon-blue transition-all duration-300"
-        disabled={state === "loading"}
-      />
+      {state === "idle" && (
+        <div className="flex justify-center pt-4 animate-fade-in">
+          <button
+            onClick={handleClick}
+            className="px-10 py-5 text-xl md:text-2xl font-bold rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-[0_0_30px_hsl(260_80%_60%/0.4),0_0_60px_hsl(230_80%_60%/0.2)] hover:shadow-[0_0_40px_hsl(260_80%_60%/0.6),0_0_80px_hsl(230_80%_60%/0.3)] hover:scale-105 transition-all duration-300 cursor-pointer"
+          >
+            🤖 Explain it to me!
+          </button>
+        </div>
+      )}
 
-      <Button
-        onClick={handleSubmit}
-        disabled={state === "loading" || !text.trim()}
-        className="w-full bg-gradient-to-r from-neon-blue to-neon-purple text-primary-foreground font-semibold gap-2 h-12 text-base hover:opacity-90 transition-opacity disabled:opacity-40"
-      >
-        {state === "loading" ? (
-          <>
-            <Loader2 className="w-5 h-5 animate-spin" />
-            Genlayer AI is evaluating consensus...
-          </>
-        ) : (
-          <>
-            <Send className="w-5 h-5" />
-            Submit to Genlayer AI
-          </>
-        )}
-      </Button>
+      {state === "loading" && (
+        <div className="flex flex-col items-center gap-3 py-12 animate-fade-in">
+          <Loader2 className="w-10 h-10 text-neon-purple animate-spin" />
+          <p className="text-muted-foreground font-mono text-sm">
+            Connecting to Genlayer AI consensus...
+          </p>
+        </div>
+      )}
 
       {state === "done" && (
-        <div className="glass-card p-6 animate-scale-in">
-          <div className="flex items-center gap-3 mb-4">
-            <CheckCircle2 className="w-6 h-6 text-neon-green" />
-            <h3 className="font-semibold text-foreground">Consensus Reached</h3>
+        <div className="space-y-4 animate-fade-in">
+          <div className="glass-card p-6 md:p-8 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_hsl(260_80%_60%/0.15)]">
+            <p className="text-base md:text-lg text-foreground leading-relaxed">
+              {EXPLANATION}
+            </p>
           </div>
-          <div className="flex items-end gap-2 mb-3">
-            <span className="text-5xl font-bold gradient-text">85</span>
-            <span className="text-xl text-muted-foreground mb-1">/100</span>
+          <div className="flex justify-center">
+            <button
+              onClick={handleReset}
+              className="flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-foreground border border-border/50 rounded-lg hover:border-border transition-colors duration-200"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Regenerate another explanation
+            </button>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Great job! Your explanation accurately captures Genlayer's core concepts with clear, simple language. The AI validators reached consensus on your score.
-          </p>
         </div>
       )}
     </div>
