@@ -70,9 +70,10 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
       {/* Add Event Form */}
       <div className="glass-card p-6 space-y-4">
         <h3 className="font-semibold text-foreground">Add New Event</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Input placeholder="Event title" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted border-border text-foreground" />
           <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="bg-muted border-border text-foreground" />
+          <Input placeholder="Event link (optional)" value={link} onChange={(e) => setLink(e.target.value)} className="bg-muted border-border text-foreground" />
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as GenlayerEvent["status"])}
