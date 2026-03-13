@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const fullText = "WELCOME TO GENLAYER SPECIAL EVENT HUB";
+const fullText = "WELCOME TO GENLAYER SPECIAL EVENTS/CHALLENGES HUB";
 
 const TerminalHero = () => {
   const [displayed, setDisplayed] = useState("");
