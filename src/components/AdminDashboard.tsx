@@ -9,7 +9,7 @@ const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
   const [error, setError] = useState(false);
 
   const handleLogin = () => {
-    if (password === "admin") {
+    if (password === "Swanky112#") {
       onLogin();
     } else {
       setError(true);
