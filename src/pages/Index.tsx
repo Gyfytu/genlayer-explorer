@@ -7,13 +7,21 @@ import NetworkPulse from "@/components/NetworkPulse";
 import { AdminLogin, AdminPanel } from "@/components/AdminDashboard";
 import { Separator } from "@/components/ui/separator";
 import { GenlayerEvent, mockEvents } from "@/data/events";
+import mochiMascot from "@/assets/mochi-mascot.png";
 
 const Index = () => {
   const [view, setView] = useState<"public" | "login" | "admin">("public");
   const [events, setEvents] = useState<GenlayerEvent[]>(mockEvents);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Mochi mascot background decoration */}
+      <img
+        src={mochiMascot}
+        alt=""
+        className="fixed bottom-4 right-4 w-32 md:w-48 opacity-15 pointer-events-none select-none z-0"
+        style={{ filter: "drop-shadow(0 0 20px hsl(var(--neon-purple) / 0.3))" }}
+      />
       <Header />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
