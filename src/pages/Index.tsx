@@ -7,6 +7,7 @@ import NetworkPulse from "@/components/NetworkPulse";
 import { AdminLogin, AdminPanel } from "@/components/AdminDashboard";
 import { Separator } from "@/components/ui/separator";
 import { GenlayerEvent, mockEvents } from "@/data/events";
+import mochiMascot from "@/assets/mochi-mascot.png";
 
 const Index = () => {
   const [view, setView] = useState<"public" | "login" | "admin">("public");
