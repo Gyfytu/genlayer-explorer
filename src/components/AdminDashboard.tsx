@@ -44,7 +44,8 @@ const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
 
 const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; setEvents: (e: GenlayerEvent[]) => void; onClose: () => void }) => {
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [link, setLink] = useState("");
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
@@ -65,11 +66,13 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
   };
 
   const addEvent = () => {
-    if (!title || !date) return;
+    if (!title || !startDate) return;
+    const dateStr = endDate ? `${startDate} — ${endDate}` : startDate;
     setEvents([...events, {
       id: Date.now().toString(),
       title,
-      date,
+      date: dateStr,
+      endDate: endDate || undefined,
       status,
       link: link || undefined,
       image: image || undefined,
@@ -77,7 +80,8 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
       twitterLink: twitterLink || undefined,
     }]);
     setTitle("");
-    setDate("");
+    setStartDate("");
+    setEndDate("");
     setLink("");
     setImage("");
     setImagePreview("");
