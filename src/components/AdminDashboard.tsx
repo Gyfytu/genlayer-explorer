@@ -53,6 +53,7 @@ const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: G
   const [discordLink, setDiscordLink] = useState("");
   const [twitterLink, setTwitterLink] = useState("");
   const [status, setStatus] = useState<GenlayerEvent["status"]>("upcoming");
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -66,19 +67,7 @@ const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: G
     reader.readAsDataURL(file);
   };
 
-  const addEvent = async () => {
-    if (!title || !startDate) return;
-    const dateStr = endDate ? `${startDate} — ${endDate}` : startDate;
-    await supabase.from("events").insert({
-      title,
-      date: dateStr,
-      end_date: endDate || null,
-      status,
-      link: link || null,
-      image: image || null,
-      discord_link: discordLink || null,
-      twitter_link: twitterLink || null,
-    });
+  const resetForm = () => {
     setTitle("");
     setStartDate("");
     setEndDate("");
@@ -87,11 +76,55 @@ const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: G
     setImagePreview("");
     setDiscordLink("");
     setTwitterLink("");
+    setStatus("upcoming");
+    setEditingId(null);
+  };
+
+  const startEdit = (event: GenlayerEvent) => {
+    setEditingId(event.id);
+    setTitle(event.title);
+    // Try to parse start/end from the combined date string
+    if (event.date.includes(" — ") && event.endDate) {
+      setStartDate(event.date.split(" — ")[0]);
+      setEndDate(event.endDate);
+    } else {
+      setStartDate(event.date);
+      setEndDate("");
+    }
+    setLink(event.link || "");
+    setImage(event.image || "");
+    setImagePreview(event.image || "");
+    setDiscordLink(event.discordLink || "");
+    setTwitterLink(event.twitterLink || "");
+    setStatus(event.status);
+  };
+
+  const saveEvent = async () => {
+    if (!title || !startDate) return;
+    const dateStr = endDate ? `${startDate} — ${endDate}` : startDate;
+    const payload = {
+      title,
+      date: dateStr,
+      end_date: endDate || null,
+      status,
+      link: link || null,
+      image: image || null,
+      discord_link: discordLink || null,
+      twitter_link: twitterLink || null,
+    };
+
+    if (editingId) {
+      await supabase.from("events").update(payload).eq("id", editingId);
+    } else {
+      await supabase.from("events").insert(payload);
+    }
+    resetForm();
     await onEventsChanged();
   };
 
   const deleteEvent = async (id: string) => {
     await supabase.from("events").delete().eq("id", id);
+    if (editingId === id) resetForm();
     await onEventsChanged();
   };
 
@@ -104,9 +137,18 @@ const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: G
         </Button>
       </div>
 
-      {/* Add Event Form */}
+      {/* Add/Edit Event Form */}
       <div className="glass-card p-6 space-y-4">
-        <h3 className="font-semibold text-foreground">Add New Event</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-foreground">
+            {editingId ? "Edit Event" : "Add New Event"}
+          </h3>
+          {editingId && (
+            <Button variant="ghost" size="sm" onClick={resetForm} className="text-muted-foreground hover:text-foreground text-xs">
+              Cancel Edit
+            </Button>
+          )}
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Input placeholder="Event title" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted border-border text-foreground" />
           <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="bg-muted border-border text-foreground" placeholder="Start date" />
@@ -134,8 +176,8 @@ const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: G
             <option value="completed">Completed</option>
           </select>
         </div>
-        <Button onClick={addEvent} disabled={!title || !startDate} className="bg-gradient-to-r from-neon-blue to-neon-purple text-primary-foreground gap-2">
-          <Plus className="w-4 h-4" /> Add Event
+        <Button onClick={saveEvent} disabled={!title || !startDate} className="bg-gradient-to-r from-neon-blue to-neon-purple text-primary-foreground gap-2">
+          {editingId ? <><Pencil className="w-4 h-4" /> Update Event</> : <><Plus className="w-4 h-4" /> Add Event</>}
         </Button>
       </div>
 
@@ -154,7 +196,7 @@ const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: G
           </thead>
           <tbody>
             {events.map((event) => (
-              <tr key={event.id} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
+              <tr key={event.id} className={`border-b border-border/50 hover:bg-muted/30 transition-colors ${editingId === event.id ? "bg-primary/5 ring-1 ring-primary/20" : ""}`}>
                 <td className="p-4 text-foreground">{event.title}</td>
                 <td className="p-4 text-muted-foreground hidden sm:table-cell">{event.date}</td>
                 <td className="p-4 hidden sm:table-cell">
@@ -196,7 +238,7 @@ const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: G
                   </span>
                 </td>
                 <td className="p-4 text-right space-x-1">
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => startEdit(event)}>
                     <Pencil className="w-4 h-4" />
                   </Button>
                   <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => deleteEvent(event.id)}>
