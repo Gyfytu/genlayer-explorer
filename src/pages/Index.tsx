@@ -67,7 +67,7 @@ const Index = () => {
         )}
 
         {view === "admin" && (
-          <AdminPanel events={events} setEvents={setEvents} onClose={() => setView("public")} />
+          <AdminPanel events={events} setEvents={setEvents} onClose={() => setView("public")} onEventsChanged={fetchEvents} />
         )}
       </main>
 
