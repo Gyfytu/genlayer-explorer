@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Lock, LogIn, Plus, Pencil, Trash2, ArrowLeft, Image } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { GenlayerEvent, mockEvents } from "@/data/events";
+import { GenlayerEvent } from "@/data/events";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
   const [password, setPassword] = useState("");
