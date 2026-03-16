@@ -2,6 +2,7 @@ export interface GenlayerEvent {
   id: string;
   title: string;
   date: string;
+  endDate?: string;
   status: "live" | "upcoming" | "completed";
   link?: string;
   image?: string;
