@@ -130,7 +130,7 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
             <option value="completed">Completed</option>
           </select>
         </div>
-        <Button onClick={addEvent} disabled={!title || !date} className="bg-gradient-to-r from-neon-blue to-neon-purple text-primary-foreground gap-2">
+        <Button onClick={addEvent} disabled={!title || !startDate} className="bg-gradient-to-r from-neon-blue to-neon-purple text-primary-foreground gap-2">
           <Plus className="w-4 h-4" /> Add Event
         </Button>
       </div>
