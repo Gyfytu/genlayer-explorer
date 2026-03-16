@@ -43,7 +43,7 @@ const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
   );
 };
 
-const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; setEvents: (e: GenlayerEvent[]) => void; onClose: () => void }) => {
+const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: GenlayerEvent[]; setEvents: (e: GenlayerEvent[]) => void; onClose: () => void; onEventsChanged: () => Promise<void> }) => {
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
