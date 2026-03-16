@@ -105,7 +105,8 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
         <h3 className="font-semibold text-foreground">Add New Event</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Input placeholder="Event title" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted border-border text-foreground" />
-          <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="bg-muted border-border text-foreground" />
+          <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="bg-muted border-border text-foreground" placeholder="Start date" />
+          <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="bg-muted border-border text-foreground" placeholder="End date (optional)" />
           <Input placeholder="Event link (optional)" value={link} onChange={(e) => setLink(e.target.value)} className="bg-muted border-border text-foreground" />
           <div className="flex items-center gap-2">
             <label className="flex items-center gap-2 h-10 rounded-md border border-border bg-muted px-3 text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors flex-1">
