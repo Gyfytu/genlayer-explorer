@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import TerminalHero from "@/components/TerminalHero";
 import ELI5Section from "@/components/ELI5Section";
@@ -6,12 +6,37 @@ import EventsSidebar from "@/components/EventsSidebar";
 import NetworkPulse from "@/components/NetworkPulse";
 import { AdminLogin, AdminPanel } from "@/components/AdminDashboard";
 import { Separator } from "@/components/ui/separator";
-import { GenlayerEvent, mockEvents } from "@/data/events";
+import { GenlayerEvent } from "@/data/events";
+import { supabase } from "@/integrations/supabase/client";
 import mochiMascot from "@/assets/mochi-mascot.png";
 
 const Index = () => {
   const [view, setView] = useState<"public" | "login" | "admin">("public");
-  const [events, setEvents] = useState<GenlayerEvent[]>(mockEvents);
+  const [events, setEvents] = useState<GenlayerEvent[]>([]);
+
+  const fetchEvents = async () => {
+    const { data } = await supabase
+      .from("events")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (data) {
+      setEvents(data.map((e) => ({
+        id: e.id,
+        title: e.title,
+        date: e.date,
+        endDate: e.end_date ?? undefined,
+        status: e.status as GenlayerEvent["status"],
+        link: e.link ?? undefined,
+        image: e.image ?? undefined,
+        discordLink: e.discord_link ?? undefined,
+        twitterLink: e.twitter_link ?? undefined,
+      })));
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background relative">
