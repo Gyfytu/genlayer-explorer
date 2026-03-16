@@ -66,20 +66,19 @@ const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: G
     reader.readAsDataURL(file);
   };
 
-  const addEvent = () => {
+  const addEvent = async () => {
     if (!title || !startDate) return;
     const dateStr = endDate ? `${startDate} — ${endDate}` : startDate;
-    setEvents([...events, {
-      id: Date.now().toString(),
+    await supabase.from("events").insert({
       title,
       date: dateStr,
-      endDate: endDate || undefined,
+      end_date: endDate || null,
       status,
-      link: link || undefined,
-      image: image || undefined,
-      discordLink: discordLink || undefined,
-      twitterLink: twitterLink || undefined,
-    }]);
+      link: link || null,
+      image: image || null,
+      discord_link: discordLink || null,
+      twitter_link: twitterLink || null,
+    });
     setTitle("");
     setStartDate("");
     setEndDate("");
@@ -88,9 +87,13 @@ const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: G
     setImagePreview("");
     setDiscordLink("");
     setTwitterLink("");
+    await onEventsChanged();
   };
 
-  const deleteEvent = (id: string) => setEvents(events.filter((e) => e.id !== id));
+  const deleteEvent = async (id: string) => {
+    await supabase.from("events").delete().eq("id", id);
+    await onEventsChanged();
+  };
 
   return (
     <div className="space-y-8 animate-fade-in">
