@@ -47,9 +47,22 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
   const [date, setDate] = useState("");
   const [link, setLink] = useState("");
   const [image, setImage] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
   const [discordLink, setDiscordLink] = useState("");
   const [twitterLink, setTwitterLink] = useState("");
   const [status, setStatus] = useState<GenlayerEvent["status"]>("upcoming");
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result as string;
+      setImage(result);
+      setImagePreview(result);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const addEvent = () => {
     if (!title || !date) return;
