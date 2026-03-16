@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Lock, LogIn, Plus, Pencil, Trash2, ArrowLeft } from "lucide-react";
+import { Lock, LogIn, Plus, Pencil, Trash2, ArrowLeft, Image } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GenlayerEvent, mockEvents } from "@/data/events";
@@ -46,14 +46,29 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [link, setLink] = useState("");
+  const [image, setImage] = useState("");
+  const [discordLink, setDiscordLink] = useState("");
+  const [twitterLink, setTwitterLink] = useState("");
   const [status, setStatus] = useState<GenlayerEvent["status"]>("upcoming");
 
   const addEvent = () => {
     if (!title || !date) return;
-    setEvents([...events, { id: Date.now().toString(), title, date, status, link: link || undefined }]);
+    setEvents([...events, {
+      id: Date.now().toString(),
+      title,
+      date,
+      status,
+      link: link || undefined,
+      image: image || undefined,
+      discordLink: discordLink || undefined,
+      twitterLink: twitterLink || undefined,
+    }]);
     setTitle("");
     setDate("");
     setLink("");
+    setImage("");
+    setDiscordLink("");
+    setTwitterLink("");
   };
 
   const deleteEvent = (id: string) => setEvents(events.filter((e) => e.id !== id));
@@ -74,6 +89,9 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
           <Input placeholder="Event title" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted border-border text-foreground" />
           <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="bg-muted border-border text-foreground" />
           <Input placeholder="Event link (optional)" value={link} onChange={(e) => setLink(e.target.value)} className="bg-muted border-border text-foreground" />
+          <Input placeholder="Image URL (optional)" value={image} onChange={(e) => setImage(e.target.value)} className="bg-muted border-border text-foreground" />
+          <Input placeholder="Discord link (optional)" value={discordLink} onChange={(e) => setDiscordLink(e.target.value)} className="bg-muted border-border text-foreground" />
+          <Input placeholder="Twitter/X link (optional)" value={twitterLink} onChange={(e) => setTwitterLink(e.target.value)} className="bg-muted border-border text-foreground" />
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as GenlayerEvent["status"])}
@@ -90,13 +108,14 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
       </div>
 
       {/* Events Table */}
-      <div className="glass-card overflow-hidden">
+      <div className="glass-card overflow-hidden overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-             <tr className="border-b border-border text-muted-foreground">
+            <tr className="border-b border-border text-muted-foreground">
               <th className="text-left p-4 font-medium">Title</th>
               <th className="text-left p-4 font-medium hidden sm:table-cell">Date</th>
-              <th className="text-left p-4 font-medium hidden sm:table-cell">Link</th>
+              <th className="text-left p-4 font-medium hidden sm:table-cell">Image</th>
+              <th className="text-left p-4 font-medium hidden md:table-cell">Links</th>
               <th className="text-left p-4 font-medium">Status</th>
               <th className="text-right p-4 font-medium">Actions</th>
             </tr>
@@ -107,13 +126,33 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
                 <td className="p-4 text-foreground">{event.title}</td>
                 <td className="p-4 text-muted-foreground hidden sm:table-cell">{event.date}</td>
                 <td className="p-4 hidden sm:table-cell">
-                  {event.link ? (
-                    <a href={event.link} target="_blank" rel="noopener noreferrer" className="text-xs text-neon-blue hover:underline truncate max-w-[150px] inline-block">
-                      {event.link}
-                    </a>
+                  {event.image ? (
+                    <img src={event.image} alt="" className="w-10 h-10 rounded object-cover" />
                   ) : (
                     <span className="text-xs text-muted-foreground">—</span>
                   )}
+                </td>
+                <td className="p-4 hidden md:table-cell">
+                  <div className="flex flex-col gap-1">
+                    {event.link && (
+                      <a href={event.link} target="_blank" rel="noopener noreferrer" className="text-xs text-neon-blue hover:underline truncate max-w-[120px] inline-block">
+                        🔗 Event
+                      </a>
+                    )}
+                    {event.discordLink && (
+                      <a href={event.discordLink} target="_blank" rel="noopener noreferrer" className="text-xs text-neon-purple hover:underline truncate max-w-[120px] inline-block">
+                        💬 Discord
+                      </a>
+                    )}
+                    {event.twitterLink && (
+                      <a href={event.twitterLink} target="_blank" rel="noopener noreferrer" className="text-xs text-neon-blue hover:underline truncate max-w-[120px] inline-block">
+                        🐦 Twitter/X
+                      </a>
+                    )}
+                    {!event.link && !event.discordLink && !event.twitterLink && (
+                      <span className="text-xs text-muted-foreground">—</span>
+                    )}
+                  </div>
                 </td>
                 <td className="p-4">
                   <span className={`font-mono text-xs px-2 py-1 rounded ${
