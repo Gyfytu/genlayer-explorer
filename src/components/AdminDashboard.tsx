@@ -44,7 +44,8 @@ const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
 
 const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; setEvents: (e: GenlayerEvent[]) => void; onClose: () => void }) => {
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [link, setLink] = useState("");
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
@@ -65,11 +66,13 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
   };
 
   const addEvent = () => {
-    if (!title || !date) return;
+    if (!title || !startDate) return;
+    const dateStr = endDate ? `${startDate} — ${endDate}` : startDate;
     setEvents([...events, {
       id: Date.now().toString(),
       title,
-      date,
+      date: dateStr,
+      endDate: endDate || undefined,
       status,
       link: link || undefined,
       image: image || undefined,
@@ -77,7 +80,8 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
       twitterLink: twitterLink || undefined,
     }]);
     setTitle("");
-    setDate("");
+    setStartDate("");
+    setEndDate("");
     setLink("");
     setImage("");
     setImagePreview("");
@@ -101,7 +105,8 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
         <h3 className="font-semibold text-foreground">Add New Event</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Input placeholder="Event title" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted border-border text-foreground" />
-          <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="bg-muted border-border text-foreground" />
+          <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="bg-muted border-border text-foreground" placeholder="Start date" />
+          <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="bg-muted border-border text-foreground" placeholder="End date (optional)" />
           <Input placeholder="Event link (optional)" value={link} onChange={(e) => setLink(e.target.value)} className="bg-muted border-border text-foreground" />
           <div className="flex items-center gap-2">
             <label className="flex items-center gap-2 h-10 rounded-md border border-border bg-muted px-3 text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors flex-1">
@@ -125,7 +130,7 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
             <option value="completed">Completed</option>
           </select>
         </div>
-        <Button onClick={addEvent} disabled={!title || !date} className="bg-gradient-to-r from-neon-blue to-neon-purple text-primary-foreground gap-2">
+        <Button onClick={addEvent} disabled={!title || !startDate} className="bg-gradient-to-r from-neon-blue to-neon-purple text-primary-foreground gap-2">
           <Plus className="w-4 h-4" /> Add Event
         </Button>
       </div>
