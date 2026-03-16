@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          created_at: string
+          date: string
+          discord_link: string | null
+          end_date: string | null
+          id: string
+          image: string | null
+          link: string | null
+          status: string
+          title: string
+          twitter_link: string | null
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          discord_link?: string | null
+          end_date?: string | null
+          id?: string
+          image?: string | null
+          link?: string | null
+          status?: string
+          title: string
+          twitter_link?: string | null
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          discord_link?: string | null
+          end_date?: string | null
+          id?: string
+          image?: string | null
+          link?: string | null
+          status?: string
+          title?: string
+          twitter_link?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
