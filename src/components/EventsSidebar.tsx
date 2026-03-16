@@ -89,26 +89,53 @@ const EventsSidebar = ({ events = mockEvents }: EventsSidebarProps) => {
       <div key={filter} className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in">
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event) => (
-            <div key={event.id} className="glass-card-hover p-4 space-y-2">
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="text-sm font-medium text-foreground leading-snug">{event.title}</h3>
-                <StatusBadge status={event.status} />
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <Calendar className="w-3 h-3" />
-                {event.date}
-              </div>
-              {event.link && (
-                <a
-                  href={event.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs text-neon-blue hover:underline transition-colors"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  View Event
-                </a>
+            <div key={event.id} className="glass-card-hover overflow-hidden">
+              {event.image && (
+                <img src={event.image} alt={event.title} className="w-full h-32 object-cover" />
               )}
+              <div className="p-4 space-y-2">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="text-sm font-medium text-foreground leading-snug">{event.title}</h3>
+                  <StatusBadge status={event.status} />
+                </div>
+                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <Calendar className="w-3 h-3" />
+                  {event.date}
+                </div>
+                <div className="flex items-center gap-3 flex-wrap">
+                  {event.link && (
+                    <a
+                      href={event.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-neon-blue hover:underline transition-colors"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      View Event
+                    </a>
+                  )}
+                  {event.discordLink && (
+                    <a
+                      href={event.discordLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-neon-purple hover:underline transition-colors"
+                    >
+                      💬 Discord
+                    </a>
+                  )}
+                  {event.twitterLink && (
+                    <a
+                      href={event.twitterLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-neon-blue hover:underline transition-colors"
+                    >
+                      🐦 Twitter/X
+                    </a>
+                  )}
+                </div>
+              </div>
             </div>
           ))
         ) : (

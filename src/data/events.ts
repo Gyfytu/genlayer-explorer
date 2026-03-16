@@ -4,6 +4,9 @@ export interface GenlayerEvent {
   date: string;
   status: "live" | "upcoming" | "completed";
   link?: string;
+  image?: string;
+  discordLink?: string;
+  twitterLink?: string;
 }
 
 export const mockEvents: GenlayerEvent[] = [
@@ -13,6 +16,8 @@ export const mockEvents: GenlayerEvent[] = [
     date: "Mar 13, 2026 — Live Now",
     status: "live",
     link: "https://genlayer.com/hackathon",
+    discordLink: "https://discord.gg/genlayer",
+    twitterLink: "https://twitter.com/genlayer",
   },
   {
     id: "2",
@@ -20,6 +25,7 @@ export const mockEvents: GenlayerEvent[] = [
     date: "Mar 20, 2026 — 4:00 PM UTC",
     status: "upcoming",
     link: "https://genlayer.com/ama",
+    twitterLink: "https://twitter.com/genlayer",
   },
   {
     id: "3",
