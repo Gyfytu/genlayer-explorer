@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Lock, LogIn, Plus, Pencil, Trash2, ArrowLeft, Image } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { GenlayerEvent, mockEvents } from "@/data/events";
+import { GenlayerEvent } from "@/data/events";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
   const [password, setPassword] = useState("");
@@ -42,7 +43,7 @@ const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
   );
 };
 
-const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; setEvents: (e: GenlayerEvent[]) => void; onClose: () => void }) => {
+const AdminPanel = ({ events, setEvents, onClose, onEventsChanged }: { events: GenlayerEvent[]; setEvents: (e: GenlayerEvent[]) => void; onClose: () => void; onEventsChanged: () => Promise<void> }) => {
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -65,20 +66,19 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
     reader.readAsDataURL(file);
   };
 
-  const addEvent = () => {
+  const addEvent = async () => {
     if (!title || !startDate) return;
     const dateStr = endDate ? `${startDate} — ${endDate}` : startDate;
-    setEvents([...events, {
-      id: Date.now().toString(),
+    await supabase.from("events").insert({
       title,
       date: dateStr,
-      endDate: endDate || undefined,
+      end_date: endDate || null,
       status,
-      link: link || undefined,
-      image: image || undefined,
-      discordLink: discordLink || undefined,
-      twitterLink: twitterLink || undefined,
-    }]);
+      link: link || null,
+      image: image || null,
+      discord_link: discordLink || null,
+      twitter_link: twitterLink || null,
+    });
     setTitle("");
     setStartDate("");
     setEndDate("");
@@ -87,9 +87,13 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
     setImagePreview("");
     setDiscordLink("");
     setTwitterLink("");
+    await onEventsChanged();
   };
 
-  const deleteEvent = (id: string) => setEvents(events.filter((e) => e.id !== id));
+  const deleteEvent = async (id: string) => {
+    await supabase.from("events").delete().eq("id", id);
+    await onEventsChanged();
+  };
 
   return (
     <div className="space-y-8 animate-fade-in">
