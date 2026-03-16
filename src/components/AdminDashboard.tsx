@@ -80,6 +80,7 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
     setDate("");
     setLink("");
     setImage("");
+    setImagePreview("");
     setDiscordLink("");
     setTwitterLink("");
   };
