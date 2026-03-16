@@ -89,7 +89,16 @@ const AdminPanel = ({ events, setEvents, onClose }: { events: GenlayerEvent[]; s
           <Input placeholder="Event title" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted border-border text-foreground" />
           <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="bg-muted border-border text-foreground" />
           <Input placeholder="Event link (optional)" value={link} onChange={(e) => setLink(e.target.value)} className="bg-muted border-border text-foreground" />
-          <Input placeholder="Image URL (optional)" value={image} onChange={(e) => setImage(e.target.value)} className="bg-muted border-border text-foreground" />
+          <div className="flex items-center gap-2">
+            <label className="flex items-center gap-2 h-10 rounded-md border border-border bg-muted px-3 text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors flex-1">
+              <Image className="w-4 h-4 shrink-0" />
+              <span className="truncate">{imagePreview ? "Image selected ✓" : "Upload image (optional)"}</span>
+              <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+            </label>
+            {imagePreview && (
+              <img src={imagePreview} alt="Preview" className="w-10 h-10 rounded object-cover border border-border" />
+            )}
+          </div>
           <Input placeholder="Discord link (optional)" value={discordLink} onChange={(e) => setDiscordLink(e.target.value)} className="bg-muted border-border text-foreground" />
           <Input placeholder="Twitter/X link (optional)" value={twitterLink} onChange={(e) => setTwitterLink(e.target.value)} className="bg-muted border-border text-foreground" />
           <select
